@@ -1,0 +1,37 @@
+@model IEnumerable<KeelteKool.Models.Teacher>
+
+@{
+    ViewBag.Title = "Õpetajad";
+}
+
+<h2>Õpetajad</h2>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Lisa õpetaja", "Create", null, new { @class = "btn btn-success" })
+    </p>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(item.FotoPath))
+                {
+                    <img src="@Url.Content("~/Content/Images/" + item.FotoPath)" class="card-img-top" alt="@item.Nimi" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nimi)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Kvalifikatsioon)</p>
+                    <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-info btn-sm">Vaata</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning btn-sm">Muuda</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

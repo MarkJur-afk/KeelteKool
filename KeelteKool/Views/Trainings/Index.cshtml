@@ -1,0 +1,47 @@
+@model IEnumerable<KeelteKool.Models.Training>
+
+@{
+    ViewBag.Title = "Koolitused";
+}
+
+<h2>Koolitused</h2>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Loo uus koolitus", "Create", null, new { @class = "btn btn-success" })
+    </p>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Course.Nimetus)</h5>
+                    <p class="card-text">
+                        <strong>Õpetaja:</strong> @Html.DisplayFor(modelItem => item.Teacher.Nimi)<br />
+                        <strong>Algus:</strong> @item.AlgusKuupaev.ToString("dd.MM.yyyy")<br />
+                        <strong>Lõpp:</strong> @item.LoppKuupaev.ToString("dd.MM.yyyy")<br />
+                        <strong>Hind:</strong> @item.Hind €<br />
+                        <strong>Kohti:</strong> @item.Registrations.Count / @item.MaxOsalejaid
+                    </p>
+                    @if (item.Registrations.Count >= item.MaxOsalejaid)
+                    {
+                        <span class="badge bg-danger">GRUPP TÄIS</span>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Register", "Trainings", new { id = item.Id })" class="btn btn-success btn-sm">Registreeru</a>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                    {
+                        <a href="@Url.Action("Edit", "Trainings", new { id = item.Id })" class="btn btn-warning btn-sm">Muuda</a>
+                        <a href="@Url.Action("Delete", "Trainings", new { id = item.Id })" class="btn btn-danger btn-sm">Kustuta</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

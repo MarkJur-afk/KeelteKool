@@ -1,0 +1,26 @@
+@model KeelteKool.Models.Teacher
+
+@{
+    ViewBag.Title = "Kustuta õpetaja";
+}
+
+<h2>Kustuta õpetaja</h2>
+
+<h3>Kas olete kindel, et soovite seda kustutada?</h3>
+<div>
+    <h4>@Model.Nimi</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Kvalifikatsioon</dt>
+        <dd class="col-sm-10">@Model.Kvalifikatsioon</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions">
+            <input type="submit" value="Kustuta" class="btn btn-danger" />
+            @Html.ActionLink("Tagasi", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

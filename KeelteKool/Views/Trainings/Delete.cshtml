@@ -1,0 +1,35 @@
+@model KeelteKool.Models.Training
+
+@{
+    ViewBag.Title = "Kustuta koolitus";
+}
+
+<h2>Kustuta koolitus</h2>
+
+<h3>Kas olete kindel, et soovite seda kustutada?</h3>
+<div>
+    <h4>Koolitus</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Kursus</dt>
+        <dd class="col-sm-10">@Model.Course.Nimetus</dd>
+
+        <dt class="col-sm-2">Õpetaja</dt>
+        <dd class="col-sm-10">@Model.Teacher.Nimi</dd>
+
+        <dt class="col-sm-2">Algus</dt>
+        <dd class="col-sm-10">@Model.AlgusKuupaev.ToString("dd.MM.yyyy")</dd>
+
+        <dt class="col-sm-2">Lõpp</dt>
+        <dd class="col-sm-10">@Model.LoppKuupaev.ToString("dd.MM.yyyy")</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions">
+            <input type="submit" value="Kustuta" class="btn btn-danger" />
+            @Html.ActionLink("Tagasi", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

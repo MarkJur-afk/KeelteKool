@@ -1,0 +1,120 @@
+﻿/* Warm green color scheme */
+:root {
+    --primary-green: #6B8E23;
+    --light-green: #8FBC8F;
+    --dark-green: #556B2F;
+    --bg-light: #F5F8F5;
+}
+
+body {
+    background-color: var(--bg-light);
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%);
+    color: white;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Feature cards */
+.feature-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(107, 142, 35, 0.2);
+}
+
+.feature-icon {
+    color: var(--primary-green);
+}
+
+/* Buttons */
+.btn-success {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-success:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+.btn-outline-success {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+/* Navbar */
+.navbar-dark {
+    background-color: var(--dark-green) !important;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(107, 142, 35, 0.2);
+}
+
+/* Badges */
+.badge.bg-success {
+    background-color: var(--primary-green) !important;
+}
+
+.badge.bg-warning {
+    background-color: #DAA520 !important;
+}
+
+/* Tables */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(107, 142, 35, 0.05);
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Links */
+a {
+    color: var(--primary-green);
+}
+
+a:hover {
+    color: var(--dark-green);
+}

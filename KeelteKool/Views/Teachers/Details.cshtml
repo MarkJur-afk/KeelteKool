@@ -1,0 +1,30 @@
+@model KeelteKool.Models.Teacher
+
+@{
+    ViewBag.Title = "Õpetaja detailid";
+}
+
+<h2>@Model.Nimi</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.FotoPath))
+        {
+            <img src="@Url.Content("~/Content/Images/" + Model.FotoPath)" class="img-fluid" alt="@Model.Nimi" />
+        }
+    </div>
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">Kvalifikatsioon</dt>
+            <dd class="col-sm-9">@Model.Kvalifikatsioon</dd>
+        </dl>
+    </div>
+</div>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Muuda", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    }
+    @Html.ActionLink("Tagasi", "Index", null, new { @class = "btn btn-secondary" })
+</p>

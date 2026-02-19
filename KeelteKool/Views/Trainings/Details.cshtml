@@ -1,0 +1,78 @@
+@model KeelteKool.Models.Training
+
+@{
+    ViewBag.Title = "Koolituse detailid";
+}
+
+<h2>Koolituse detailid</h2>
+
+<div>
+    <h4>@Model.Course.Nimetus</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Õpetaja</dt>
+        <dd class="col-sm-10">@Model.Teacher.Nimi</dd>
+
+        <dt class="col-sm-2">Algus</dt>
+        <dd class="col-sm-10">@Model.AlgusKuupaev.ToString("dd.MM.yyyy")</dd>
+
+        <dt class="col-sm-2">Lõpp</dt>
+        <dd class="col-sm-10">@Model.LoppKuupaev.ToString("dd.MM.yyyy")</dd>
+
+        <dt class="col-sm-2">Hind</dt>
+        <dd class="col-sm-10">@Model.Hind €</dd>
+
+        <dt class="col-sm-2">Kohti</dt>
+        <dd class="col-sm-10">@Model.Registrations.Count / @Model.MaxOsalejaid</dd>
+    </dl>
+
+    @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+    {
+        <h4>Osalejad</h4>
+        if (Model.Registrations.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>E-post</th>
+                        <th>Staatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reg in Model.Registrations)
+                    {
+                        <tr>
+                            <td>@reg.User.Email</td>
+                            <td>
+                                @if (reg.Staatus == "Kinnitatud")
+                                {
+                                    <span class="badge bg-success">@reg.Staatus</span>
+                                }
+                                else if (reg.Staatus == "Ootel" || reg.Staatus == "Активна")
+                                {
+                                    <span class="badge bg-warning">@reg.Staatus</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@reg.Staatus</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Osalejaid pole veel.</p>
+        }
+    }
+</div>
+
+<p>
+    @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink("Muuda", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    }
+    @Html.ActionLink("Tagasi", "Index", null, new { @class = "btn btn-secondary" })
+</p>

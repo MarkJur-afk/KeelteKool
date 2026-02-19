@@ -1,0 +1,54 @@
+@model IEnumerable<KeelteKool.Models.Registration>
+
+@{
+    ViewBag.Title = "Minu koolitused";
+}
+
+<h2>Minu koolitused</h2>
+
+@if (!Model.Any())
+{
+    <p>Te pole veel ühelegi koolitusele registreerunud.</p>
+    <p>@Html.ActionLink("Vaata koolitusi", "Index", "Trainings", null, new { @class = "btn btn-success" })</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Kursus</th>
+                <th>Õpetaja</th>
+                <th>Algus</th>
+                <th>Lõpp</th>
+                <th>Hind</th>
+                <th>Staatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Training.Course.Nimetus</td>
+                    <td>@item.Training.Teacher.Nimi</td>
+                    <td>@item.Training.AlgusKuupaev.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Training.LoppKuupaev.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Training.Hind €</td>
+                    <td>
+                        @if (item.Staatus == "Kinnitatud")
+                        {
+                            <span class="badge bg-success">@item.Staatus</span>
+                        }
+                        else if (item.Staatus == "Ootel")
+                        {
+                            <span class="badge bg-warning">@item.Staatus</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@item.Staatus</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

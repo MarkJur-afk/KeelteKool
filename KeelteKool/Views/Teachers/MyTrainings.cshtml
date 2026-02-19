@@ -1,0 +1,40 @@
+@model IEnumerable<KeelteKool.Models.Training>
+
+@{
+    ViewBag.Title = "Minu koolitused";
+}
+
+<h2>Minu koolitused</h2>
+
+@if (!Model.Any())
+{
+    <p>Teil pole veel koolitusi määratud.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Kursus</th>
+                <th>Algus</th>
+                <th>Lõpp</th>
+                <th>Osalejaid</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Course.Nimetus</td>
+                    <td>@item.AlgusKuupaev.ToString("dd.MM.yyyy")</td>
+                    <td>@item.LoppKuupaev.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Registrations.Count / @item.MaxOsalejaid</td>
+                    <td>
+                        @Html.ActionLink("Vaata", "Details", "Trainings", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

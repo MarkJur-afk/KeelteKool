@@ -1,0 +1,59 @@
+@model IEnumerable<KeelteKool.Models.Registration>
+
+@{
+    ViewBag.Title = "Registreerimised";
+}
+
+<h2>Registreerimised</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Õpilane</th>
+            <th>Kursus</th>
+            <th>Algus</th>
+            <th>Staatus</th>
+            <th>Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.Email</td>
+                <td>@item.Training.Course.Nimetus</td>
+                <td>@item.Training.AlgusKuupaev.ToString("dd.MM.yyyy")</td>
+                <td>
+                    @if (item.Staatus == "Kinnitatud")
+                    {
+                        <span class="badge bg-success">@item.Staatus</span>
+                    }
+                    else if (item.Staatus == "Ootel" || item.Staatus == "Активна")
+                    {
+                        <span class="badge bg-warning">@item.Staatus</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@item.Staatus</span>
+                    }
+                </td>
+                <td>
+                    @using (Html.BeginForm("UpdateStatus", "Registrations", FormMethod.Post, new { style = "display:inline;" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("id", item.Id)
+                        @Html.Hidden("status", "Kinnitatud")
+                        <button type="submit" class="btn btn-success btn-sm">Kinnita</button>
+                    }
+                    @using (Html.BeginForm("UpdateStatus", "Registrations", FormMethod.Post, new { style = "display:inline;" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("id", item.Id)
+                        @Html.Hidden("status", "Tühistatud")
+                        <button type="submit" class="btn btn-danger btn-sm">Tühista</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
